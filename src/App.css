@@ -1,0 +1,13 @@
+.container-fluid{
+  background-image:  url("/public/todo.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+ 
+.bg-img{
+  backdrop-filter:  blur(6px);
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  box-shadow: 10px 10px 10px rgba(30, 30, 30, 0.5); 
+}
+
