@@ -55,9 +55,26 @@ export function UserDashBoard(){
         }
     });
     
-    function handleEditClick(){
-        
-    }
+    function handleEditClick(id){
+        axios.get(`http://127.0.0.1:8080/get-task/${id}`)
+        .then(response=>{
+           setEditTasks(response.data);
+        })
+   }
+
+    const editFormik = useFormik({
+        initialValues: {
+            Appointment_Id: EditTasks[0].Appointment_Id,
+            Title: EditTasks[0].Title,
+            Description: EditTasks[0].Description,
+            Date: EditTasks[0].Date,
+            UserId: EditTasks[0].UserId
+        },
+        onSubmit: (task) => {
+             // axios PUT  http://127.0.0.1:7000/edit-task/1, data
+        },
+        enableReinitialize:true
+    })
     
     return(
         <div className="dashboard ">
@@ -114,7 +131,34 @@ export function UserDashBoard(){
                     ))
                 }
             </div>
+            <div className="modal fade" id="editTask">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h2>Edit Task</h2>
+                            <button className="btn btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form onSubmit={editFormik.handleSubmit}>
+                            <dl>
+                                <dt>Title</dt>
+                                <dd><input type="text" value={EditTasks[0].Title} onChange={editFormik.handleChange} name="Title" /></dd>
+                                <dt>Description</dt>
+                                <dd>
+                                    <textarea rows="4" value={EditTasks[0].Description} onChange={editFormik.handleChange} name="Description" cols="40"></textarea>
+                                </dd>
+                                <dt>Date</dt>
+                                <dd>
+                                    <input type="date" value={EditTasks[0].Date} onChange={editFormik.handleChange} name="Date" />
+                                </dd>
+                            </dl>
+                            <button type="submit" className="btn btn-success">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        
     )
 }
